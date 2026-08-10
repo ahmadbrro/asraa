@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="أسراء - ممرضة محترفة من الرباط، متاحة للاستشارات التمريضية والتوعية الصحية">
+    <title>أسراء | ممرضة من الرباط</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Reem+Kufi+Fun:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fdfbfb;
+            --bg-soft: #f4f1f0;
+            --surface: #ffffff;
+            --surface-2: #fcf9f7;
+            --text: #3e3a39;
+            --text-soft: #4d423d;
+            --muted: #8b7b73;
+            --border: #f0e5dd;
+            --primary: #b15247;
+            --primary-dark: #8a3229;
+            --green: #006233;
+            --red: #c1272d;
+            --whatsapp: #25D366;
+            --shadow: 0 25px 50px -10px rgba(0,0,0,0.15);
+            --accent-bg: #f3e9e4;
+            --tag-bg: #e8ddd6;
+            --nav-bg: rgba(255,255,255,0.75);
+            --blob-opacity: 0.5;
+        }
+
+        [data-theme="dark"] {
+            --bg: #17120f;
+            --bg-soft: #201a16;
+            --surface: #241d18;
+            --surface-2: #2a221c;
+            --text: #f2ebe6;
+            --text-soft: #d9c8bd;
+            --muted: #a39084;
+            --border: #3a2e26;
+            --accent-bg: #3a2a22;
+            --tag-bg: #33271f;
+            --nav-bg: rgba(24,18,15,0.8);
+            --blob-opacity: 0.18;
+            --shadow: 0 25px 50px -10px rgba(0,0,0,0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* خلفيات زخرفية متحركة */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: var(--blob-opacity);
+            z-index: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .blob-1 { width: 420px; height: 420px; background: #e5b3a8; top: -120px; right: -100px; }
+        .blob-2 { width: 380px; height: 380px; background: #bfd8c5; bottom: -120px; left: -100px; }
+        .blob-3 { width: 260px; height: 260px; background: #f2d9a8; top: 45%; left: -80px; }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== شريط التنقل ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+        .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'Reem Kufi Fun', 'Cairo', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .brand-badge {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--green));
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.4rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-soft);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.98rem;
+            position: relative;
+            padding: 0.2rem 0;
+        }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px; right: 0;
+            width: 0; height: 2.5px;
+            background: linear-gradient(90deg, var(--primary), var(--green));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 0.8rem; }
+
+        .icon-btn {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s ease;
+        }
+        .icon-btn:hover { transform: translateY(-2px); border-color: var(--primary); }
+
+        .hamburger { display: none; }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding: 0.5rem 1.5rem 1.2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(14px);
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: var(--text-soft);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.7rem 0.4rem;
+            border-bottom: 1px dashed var(--border);
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* ===== البطل ===== */
+        .hero {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 2.5rem;
+            padding: 4rem 0 2.5rem;
+        }
+        .avatar-wrap {
+            position: relative;
+            width: 220px; height: 220px;
+            flex-shrink: 0;
+        }
+        .avatar-ring {
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--red), var(--green), var(--primary), var(--red));
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .avatar {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 6px solid var(--surface);
+            overflow: hidden;
+            background: linear-gradient(135deg, #b74747, #7a5a4c);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 5rem;
+            color: #fff;
+            box-shadow: 0 18px 40px rgba(148, 83, 83, 0.3);
+        }
+        .avatar img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .avatar emoji-fallback { display: none; }
+
+        .hero-text h1 {
+            font-family: 'Reem Kufi Fun', 'Cairo', sans-serif;
+            font-size: 3.4rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.25;
+            margin-bottom: 0.4rem;
+        }
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--accent-bg);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: var(--text-soft);
+            font-weight: 600;
+            font-size: 0.98rem;
+            margin-bottom: 0.9rem;
+        }
+        .profession {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            border-right: 5px solid var(--primary);
+            padding-right: 0.8rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .hero-desc {
+            color: var(--text-soft);
+            max-width: 520px;
+            margin-bottom: 1.6rem;
+        }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            border-radius: 2.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: inherit;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(177, 82, 71, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(177, 82, 71, 0.4); }
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+        .btn-wa {
+            background: var(--whatsapp);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+        }
+        .btn-wa:hover { background: #1da851; transform: translateY(-2px); }
+
+        /* ===== شريط الأرقام ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+            margin: 2.5rem 0 3.5rem;
+            padding: 2rem 1.5rem;
+            background: var(--surface);
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .stat { text-align: center; }
+        .stat-num {
+            font-family: 'Reem Kufi Fun', 'Cairo', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-label { color: var(--muted); font-size: 0.95rem; font-weight: 600; }
+        .stat-icon { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+
+        /* ===== عناوين الأقسام ===== */
+        .section { padding: 1.5rem 0 3.5rem; }
+        .section-head { text-align: center; margin-bottom: 2.5rem; }
+        .section-eyebrow {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+        }
+        .section-head h2 {
+            font-family: 'Reem Kufi Fun', 'Cairo', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .section-head p { color: var(--muted); max-width: 560px; margin: 0.6rem auto 0; }
+        .section-line {
+            width: 70px; height: 5px;
+            margin: 0.9rem auto 0;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--green));
+        }
+
+        /* ===== بطاقات ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.6rem;
+        }
+        .card {
+            background: var(--surface);
+            border-radius: 2rem;
+            padding: 1.9rem 1.6rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; right: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--green));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.35s ease;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 20px 34px -8px rgba(120,80,60,0.18); }
+        .card:hover::before { transform: scaleX(1); }
+        .card-icon {
+            font-size: 2.3rem;
+            margin-bottom: 0.9rem;
+            display: inline-block;
+            background: var(--accent-bg);
+            width: 62px; height: 62px;
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card h3 {
+            font-family: 'Reem Kufi Fun', 'Cairo', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.7rem;
+        }
+        .card p, .card li { color: var(--text-soft); font-size: 0.98rem; }
+        .card ul { list-style: none; }
+        .card ul li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .card ul li::before {
+            content: "✦";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .interest-tag {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--text-soft);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .interest-tag:hover { background: var(--primary); color: #fff; transform: scale(1.05); }
+
+        .highlight {
+            background: var(--accent-bg);
+            border-right: 4px solid var(--primary);
+            padding: 0.6rem 1rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0 0;
+            color: var(--text-soft);
+            font-weight: 600;
+        }
+        .quote { font-style: italic; margin-top: 1.2rem; color: var(--muted); font-size: 0.95rem; }
+
+        .city-banner {
+            margin-top: 1rem;
+            background: var(--accent-bg);
+            border-radius: 1.5rem;
+            padding: 0.9rem;
+            text-align: center;
+            color: var(--text-soft);
+        }
+
+        /* ===== آراء ===== */
+        .testimonials { display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .testimonial {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1.8rem;
+            padding: 1.7rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+        .testimonial .stars { color: #f5a623; font-size: 1rem; margin-bottom: 0.7rem; }
+        .testimonial p { color: var(--text-soft); font-size: 0.98rem; }
+        .testimonial .author { margin-top: 1rem; font-weight: 700; color: var(--text); }
+        .testimonial .author span { display: block; font-weight: 500; color: var(--muted); font-size: 0.85rem; }
+
+        /* ===== التواصل ===== */
+        .contact-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 2.4rem;
+            padding: 2.4rem;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.2rem;
+        }
+        .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+        .contact-info h3 {
+            font-family: 'Reem Kufi Fun', 'Cairo', sans-serif;
+            font-size: 1.7rem;
+            color: var(--text);
+        }
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--text-soft);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .contact-row .ico {
+            width: 42px; height: 42px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: var(--accent-bg);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+        .phone-number-display {
+            direction: ltr;
+            display: inline-block;
+            font-weight: 700;
+            background: var(--accent-bg);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            color: var(--green);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .phone-number-display:hover { background: var(--green); color: #fff; }
+
+        .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+        .contact-form label { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem 1.1rem;
+            border-radius: 14px;
+            border: 1.5px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.98rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(177, 82, 71, 0.12);
+        }
+        .contact-form textarea { resize: vertical; min-height: 100px; }
+        .form-note { font-size: 0.82rem; color: var(--muted); }
+
+        /* ===== الفوتر ===== */
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-top: 1px dashed var(--border);
+            padding: 2rem 0 2.4rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .flag-line { font-size: 1.2rem; }
+
+        /* ===== زر العودة للأعلى ===== */
+        #backTop {
+            position: fixed;
+            bottom: 1.6rem;
+            left: 1.6rem;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 10px 22px rgba(177, 82, 71, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 90;
+        }
+        #backTop.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        #backTop:hover { background: var(--primary-dark); }
+
+        /* ===== الإشعارات ===== */
+        .toast {
+            position: fixed;
+            bottom: 1.8rem;
+            right: 50%;
+            transform: translate(50%, 20px);
+            background: var(--text);
+            color: var(--bg);
+            font-weight: 700;
+            padding: 0.8rem 1.6rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s ease;
+            z-index: 200;
+            font-size: 0.95rem;
+        }
+        .toast.show { opacity: 1; transform: translate(50%, 0); }
+
+        /* ===== ظهور العناصر عند التمرير ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== استجابة ===== */
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+            .hero-desc { margin-inline: auto; }
+            .hero-cta { justify-content: center; }
+            .profession { text-align: right; }
+            .contact-box { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .hero { padding-top: 2.5rem; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .avatar-wrap { width: 170px; height: 170px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .section-head h2 { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- شريط التنقل -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#top" class="brand">
+                <span class="brand-badge">🩺</span> أسراء
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">عنّي</a></li>
+                <li><a href="#services">مجالاتي</a></li>
+                <li><a href="#interests">اهتماماتي</a></li>
+                <li><a href="#city">الرباط</a></li>
+                <li><a href="#testimonials">آراء</a></li>
+                <li><a href="#contact">تواصل</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle" title="تبديل الوضع الليلي" aria-label="تبديل الوضع">🌙</button>
+                <button class="icon-btn hamburger" id="hamburger" aria-label="القائمة">☰</button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#about">عنّي</a>
+            <a href="#services">مجالاتي</a>
+            <a href="#interests">اهتماماتي</a>
+            <a href="#city">الرباط</a>
+            <a href="#testimonials">آراء</a>
+            <a href="#contact">تواصل</a>
+        </div>
+    </nav>
+
+    <div id="top"></div>
+
+    <!-- البطل -->
+    <div class="container">
+        <header class="hero">
+            <div class="avatar-wrap reveal">
+                <div class="avatar-ring"></div>
+                <div class="avatar">
+                    <img src="76abaf62-dfce-4aec-8cd6-4ae85ee4bdcb.jpg" alt="صورة أسراء">
+                    <span style="display:none;">🩺</span>
+                </div>
+            </div>
+            <div class="hero-text reveal">
+                <h1>أسراء</h1>
+                <div class="location-badge">
+                    <span>📍</span> الرباط، المغرب
+                </div>
+                <div class="profession">ممرضة محترفة</div>
+                <p class="hero-desc">
+                    أكرّس وقتي للرعاية الصحية الإنسانية، وأؤمن بأن الكلمة الطيبة جزء من العلاج.
+                    أعمل في بيئة طبية ديناميكية وأسعى دائمًا لتطوير مهاراتي في التمريض الحديث.
+                </p>
+                <div class="hero-cta">
+                    <a href="https://wa.me/212751257588" target="_blank" rel="noopener noreferrer" class="btn btn-wa">💬 راسلني على واتساب</a>
+                    <a href="#contact" class="btn btn-outline">📬 تواصل معي</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- شريط الأرقام -->
+        <div class="stats reveal">
+            <div class="stat">
+                <span class="stat-icon">🕰️</span>
+                <div class="stat-num"><span class="counter" data-target="5">0</span>+</div>
+                <div class="stat-label">سنوات خبرة</div>
+            </div>
+            <div class="stat">
+                <span class="stat-icon">🤝</span>
+                <div class="stat-num"><span class="counter" data-target="1200">0</span>+</div>
+                <div class="stat-label">مريض تمت رعايته</div>
+            </div>
+            <div class="stat">
+                <span class="stat-icon">📚</span>
+                <div class="stat-num"><span class="counter" data-target="12">0</span>+</div>
+                <div class="stat-label">دورة تكوينية</div>
+            </div>
+            <div class="stat">
+                <span class="stat-icon">🏅</span>
+                <div class="stat-num"><span class="counter" data-target="8">0</span>+</div>
+                <div class="stat-label">شهادات معتمدة</div>
+            </div>
+        </div>
+
+        <!-- عنّي -->
+        <section class="section" id="about">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">من أنا؟</div>
+                <h2>عنّي</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="grid">
+                <div class="card reveal">
+                    <div class="card-icon">🌸</div>
+                    <h3>نبذة</h3>
+                    <p>
+                        أسراء، ممرضة من قلب العاصمة الرباط. أؤمن بأن العناية الحقيقية تتجاوز
+                        الوصفات الطبية لتلامس روح المريض، لذلك أجعل اللطف والتواصل جزءًا لا يتجزأ من عملي.
+                    </p>
+                    <div class="highlight">“التمريض ليس مجرد مهنة، بل رسالة إنسانية.”</div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">🎯</div>
+                    <h3>قيمي</h3>
+                    <ul>
+                        <li><strong>التعاطف</strong> – أنصت لأعطي أكثر من أن أصف.</li>
+                        <li><strong>الدقة</strong> – الدقة في كل تفصيلة طبية.</li>
+                        <li><strong>التعلم المستمر</strong> – أحدّث معرفتي دائمًا.</li>
+                        <li><strong>السرية</strong> – خصوصية المريض خط أحمر.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- مجالاتي -->
+        <section class="section" id="services">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">ماذا أقدم؟</div>
+                <h2>مجالاتي الطبية</h2>
+                <div class="section-line"></div>
+                <p>خدمات تمريضية شاملة بعناية واحترافية</p>
+            </div>
+            <div class="grid">
+                <div class="card reveal">
+                    <div class="card-icon">🏥</div>
+                    <h3>الرعاية العامة</h3>
+                    <p>متابعة الحالة الصحية للمرضى، وتنسيق خطط العلاج، ورعاية متكاملة داخل المستشفى وفي المنزل.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">🚑</div>
+                    <h3>الطوارئ والعناية المركزة</h3>
+                    <p>التعامل الهادئ والسريع مع الحالات الحرجة، ودعم فريق الطوارئ تحت الضغط.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">🩹</div>
+                    <h3>التوعية الصحية</h3>
+                    <p>تثقيف المرضى حول الوقاية من الأمراض، وتصحيح المفاهيم الصحية الشائعة.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">💚</div>
+                    <h3>الدعم النفسي</h3>
+                    <p>مرافقة المرضى وعائلاتهم، وتقديم دعم نفسي ومعنوي خلال رحلة العلاج.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- اهتماماتي -->
+        <section class="section" id="interests">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">حياتي خارج العمل</div>
+                <h2>اهتماماتي</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="card reveal" style="text-align:center; padding: 2.4rem;">
+                <div class="card-icon" style="margin-inline:auto;">📚</div>
+                <h3>أشياء تُغذي الروح والعقل</h3>
+                <div style="margin-top: 1rem;">
+                    <span class="interest-tag">🧘‍♀️ اليوغا والتأمل</span>
+                    <span class="interest-tag">📖 قراءة الروايات</span>
+                    <span class="interest-tag">🍲 الطبخ المغربي</span>
+                    <span class="interest-tag">🚶‍♀️ كورنيش أبي رقراق</span>
+                    <span class="interest-tag">🎨 الرسم بالألوان المائية</span>
+                    <span class="interest-tag">🌿 الأعشاب الطبيعية</span>
+                    <span class="interest-tag">✈️ السفر واكتشاف ثقافات</span>
+                </div>
+                <p class="quote">"أجد متعتي في تحضير طبق كسكس تقليدي يوم الجمعة، أو التنزه في حدائق الرباط."</p>
+            </div>
+        </section>
+
+        <!-- الرباط -->
+        <section class="section" id="city">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">مدينتي</div>
+                <h2>الرباط</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="grid">
+                <div class="card reveal">
+                    <div class="card-icon">🏛️</div>
+                    <h3>عاصمة العبق</h3>
+                    <p>
+                        أعشق الرباط بعبقها التاريخي وحداثتها. من صومعة حسان إلى شواطئها الهادئة،
+                        أستمد طاقتي من جمال العاصمة.
+                    </p>
+                    <div class="city-banner">
+                        <span style="font-size:1.4rem;">🇲🇦</span>
+                        <strong>المغرب</strong> في القلب
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">📍</div>
+                    <h3>أماكن قريبة من قلبي</h3>
+                    <div style="margin-top:0.4rem;">
+                        <span class="interest-tag">🌊 المحيط الأطلسي</span>
+                        <span class="interest-tag">🏰 قصبة الوداية</span>
+                        <span class="interest-tag">🌳 حي الرياض</span>
+                        <span class="interest-tag">🕌 صومعة حسان</span>
+                        <span class="interest-tag">🌹 حدائق أندلس</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- آراء -->
+        <section class="section" id="testimonials">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">ماذا يقولون؟</div>
+                <h2>آراء من أحبّهم</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="testimonials">
+                <div class="testimonial reveal">
+                    <div class="stars">★★★★★</div>
+                    <p>"أسراء أنقذت اليوم الذي كان الأصعب على عائلتي. لطفها وحنكتها مهدّئان، وأوصي بها بكل ثقة."</p>
+                    <div class="author">سلمى - والدة مريضة <span>الرباط</span></div>
+                </div>
+                <div class="testimonial reveal">
+                    <div class="stars">★★★★★</div>
+                    <p>"دقة مذهلة في العمل، وروح إيجابية تغيّر أجواء القسم. شرف العمل معها."</p>
+                    <div class="author">د. يوسف - طبيب <span>المستشفى الجامعي</span></div>
+                </div>
+                <div class="testimonial reveal">
+                    <div class="stars">★★★★★</div>
+                    <p>"نصيحتها الصحية غيّرت عاداتي للأفضل. إنسانة طيبة ومحترفة في نفس الوقت."</p>
+                    <div class="author">عبد الرحمن - صديق <span>سلا</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- تواصل -->
+        <section class="section" id="contact">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">سعيدة بالحديث معك</div>
+                <h2>تواصلوا معي</h2>
+                <div class="section-line"></div>
+                <p>متاحة للاستشارات التمريضية والتوعية الصحية</p>
+            </div>
+            <div class="contact-box reveal">
+                <div class="contact-info">
+                    <h3>معلومات التواصل</h3>
+                    <div class="contact-row">
+                        <span class="ico">✉️</span>
+                        <span>asmae.nurse@gmail.com</span>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ico">📞</span>
+                        <span class="phone-number-display" id="phoneCopy">+212 751-257588</span>
+                        <span style="font-size:0.85rem; color:var(--muted);">(اضغط للنسخ)</span>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ico">📍</span>
+                        <span>الرباط، المغرب</span>
+                    </div>
+                    <a href="https://wa.me/212751257588" target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="margin-top:0.5rem;">
+                        💬 راسلني الآن على واتساب
+                    </a>
+                </div>
+                <form class="contact-form" id="waForm">
+                    <h3 style="font-family:'Reem Kufi Fun','Cairo',sans-serif; color:var(--text);">أرسل رسالة مباشرة</h3>
+                    <div>
+                        <label for="fName">الاسم</label>
+                        <input type="text" id="fName" name="name" placeholder="اسمك الكريم" required>
+                    </div>
+                    <div>
+                        <label for="fMsg">الرسالة</label>
+                        <textarea id="fMsg" name="message" placeholder="كيف يمكنني مساعدتك؟" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">إرسال عبر واتساب 💬</button>
+                    <p class="form-note">بإرسالك للرسالة سيتم فتح واتساب بملء الرسالة تلقائيًا.</p>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <p style="font-weight: 700; font-size: 1.05rem; color: var(--text);">أسراء · ممرضة من الرباط</p>
+            <p>الرعاية رسالة، واللطف جزء من العلاج 💚</p>
+            <div class="flag-line">صُنع بكل فخر في الرباط 🇲🇦</div>
+            <p style="font-size:0.8rem; opacity:0.8;">© 2025 أسراء — جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <button id="backTop" title="العودة للأعلى">↑</button>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== الوضع الليلي =====
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+
+        const toggleBtn = document.getElementById('themeToggle');
+        toggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            toggleBtn.textContent = isDark ? '🌙' : '☀️';
+        });
+        if (document.documentElement.getAttribute('data-theme') === 'dark') toggleBtn.textContent = '☀️';
+
+        // ===== القائمة الجوالة =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+        // ===== عدّادات الأرقام =====
+        const counters = document.querySelectorAll('.counter');
+        const animateCounter = (el) => {
+            const target = +el.dataset.target;
+            const duration = 1500;
+            const start = performance.now();
+            const step = (now) => {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target).toLocaleString('ar-MA');
+                if (progress < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        };
+
+        // ===== ظهور العناصر عند التمرير =====
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.classList.contains('stats')) {
+                        counters.forEach(animateCounter);
+                    }
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ===== زر العودة للأعلى =====
+        const backTop = document.getElementById('backTop');
+        window.addEventListener('scroll', () => {
+            backTop.classList.toggle('show', window.scrollY > 500);
+        });
+        backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ===== نسخ رقم الهاتف =====
+        const toast = document.getElementById('toast');
+        let toastTimer;
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+        document.getElementById('phoneCopy').addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText('+212751257588');
+                showToast('✅ تم نسخ الرقم');
+            } catch {
+                showToast('📞 الرقم: +212751257588');
+            }
+        });
+
+        // ===== نموذج واتساب =====
+        document.getElementById('waForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('fName').value.trim();
+            const msg = document.getElementById('fMsg').value.trim();
+            const text = encodeURIComponent(`السلام عليكم أسراء، أنا ${name}.\n\n${msg}`);
+            window.open(`https://wa.me/212751257588?text=${text}`, '_blank');
+        });
+    </script>
+</body>
+</html>
